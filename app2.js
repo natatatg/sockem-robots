@@ -63,7 +63,8 @@ function Opponent(){
 //game engine
 let Engine = {
     currentOpponent: new Opponent(),
-    round: 0,  
+    round: 0,
+    roundResult: "",
     //REFRACTOR///
     //Try and get runRound to work with any RPS varient
     //use Options.possibleMoves[i]["winsAgainst"]
@@ -73,122 +74,38 @@ let Engine = {
         const randomNum = (Math.floor((Math.random()*5)));
         opponentMove = Options.possibleMoves[randomNum];
         console.log(playerMove.buttonLabel + " " + opponentMove.buttonLabel);
+        this.round++;
         if (playerMove.code === opponentMove.code) {
-            console.log("tie.");
+            this.roundResult = "tie";
         } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
-            console.log("you win.");
+            this.roundResult = "win";
+            Player.score++;
         } else {
-            console.log("you lose.");
+            this.roundResult = "lose";
+            this.currentOpponent.score++;
         }
+        console.log(`Round: ${this.round}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
+
+        if (Player.score === 3 || this.currentOpponent.score === 3) {
+            console.log("GAME OVER.");
+            if (Player.score > this.currentOpponent.score) {
+                console.log("YOU WIN.");
+            } else {
+                console.log("YOU LOSE.");
+            }
+            //function to reset round and scores
+            this.resetGame();
+        }
+        
 
 
-
-
-        // switch (Player.move.code) {
-        //     case "jab":
-        //         switch (this.currentOpponent.move.code) {
-        //             case "jab":
-        //                 this.roundResult = "tie";
-        //                 break;
-        //             case "cross":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "lHook":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "rHook":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "uppercut":
-        //                 this.roundResult = "win";
-        //                 break;
-        //         }
-        //     break;
-        //     case "cross":
-        //         switch (this.currentOpponent.move.code) {
-        //             case "jab":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "cross":
-        //                 this.roundResult = "tie";
-        //                 break;
-        //             case "lHook":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "rHook":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "uppercut":
-        //                 this.roundResult = "win";
-        //                 break;
-        //         }
-        //     break;
-        //     case "lHook":
-        //         switch (this.currentOpponent.move.code) {
-        //             case "jab":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "cross":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "lHook":
-        //                 this.roundResult = "tie";
-        //                 break;
-        //             case "rHook":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "uppercut":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //         }
-        //     break;
-        //     case "rHook":
-        //         switch (this.currentOpponent.move.code) {
-        //             case "jab":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "cross":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //             case "lHook":
-        //                 this.roundResult = "win";
-        //                 break;
-        //             case "rHook":
-        //                 this.roundResult = "tie";
-        //                 break;
-        //             case "uppercut":
-        //                 this.roundResult = "lose";
-        //                 break;
-        //         }
-        //     break;
-        //     case "uppercut":
-        //         switch (this.currentOpponent.move.code) {
-        //             case "jab":
-        //                 this.roundResult = "lose";
-        //                 this.currentOpponent.score = this.currentOpponent.score+1;
-        //                 break;
-        //             case "cross":
-        //                 this.roundResult = "lose";
-        //                 this.currentOpponent.score = this.currentOpponent.score+1;
-        //                 break;
-        //             case "lHook":
-        //                 this.roundResult = "win";
-        //                 Player.score = Player.score+1;
-        //                 break;
-        //             case "rHook":
-        //                 this.roundResult = "win";
-        //                 Player.score = Player.score+1;
-        //                 break;
-        //             case "uppercut":
-        //                 this.roundResult = "tie";
-        //                 break;
-        //         }
-        // }
-            // this.round = this.round+1;
-            
-            
-            // console.log(`Round: ${this.round}. Player chose ${Player.move.buttonLabel}, Opponent chose ${this.currentOpponent.move.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
         },
+    resetGame() {
+        this.round = 0;
+        Player.score = 0;
+        this.currentOpponent.score = 0;
+
+    }
 }
 
 //initiate
