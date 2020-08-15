@@ -1,0 +1,47 @@
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display:flex;
+  align-items: center;
+}
+ol li {
+  float:left;
+  font-size:0;
+  position: relative;
+
+}
+ol li::before {
+  content: "";
+  height: 40px;
+  width: 40px;
+  background-color: #bbb;
+  border-radius: 50%; 
+  display: inline-block;
+  margin-right:15px;
+}
+.win i{
+  position: absolute;
+  left:5px;
+  top:-5px;
+}
+.lose i{
+  position: absolute;
+  left:5px;
+  bottom:-5px;
+}
+
+li.hidden {
+  display: none;
+}
+
+li.current:before {
+  height: 60px;
+  width: 60px;
+}
+#currentMoveMarker {
+  position: relative;
+  left:65px;
+  padding:10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
