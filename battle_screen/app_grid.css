@@ -1,0 +1,107 @@
+body {
+  background-color:#aaaaaa;
+}
+
+.computerMove, .playerMove {
+  border: solid black 1px;
+  border-radius: 50%;
+  background-color: #c4c4c4;
+  width: 40px;
+  height: 40px;
+}
+
+.currentMove {
+  width: 60px;
+  height:60px;
+}
+
+#sizeContainer{
+  max-width:600px;
+  min-width:100px;
+  margin-right: auto;
+  margin-left:auto;
+  margin-top: 60px;
+  padding:40px;
+}
+
+#appContainer{
+  display: grid;
+  gap: 15px;
+
+}
+
+.first {
+  grid-column: 1;
+}
+.second {
+  grid-column: 2;
+}
+.third {
+  grid-column: 3;
+}
+.forth {
+  grid-column: 4;
+}
+
+.computerMove {
+  place-self: center;
+  grid-row: 1;
+}
+
+.playerMove {
+  place-self: center;
+  grid-row: 3;
+}
+
+#currentMoveMarker {
+  place-self: center;
+  grid-row: 2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
+.r_hook {
+  background-color: #3d6cb0;
+}
+.l_hook {
+  background-color: #d7803d;
+}
+.jab {
+  background-color: #81b970;
+}
+.uppercut {
+  background-color: #aa3524;
+}
+.cross {
+  background-color: #6a3a86;
+}
+.hidden {
+  display:none;
+}
+
+.computerMove .material-icons {
+  position: relative;
+  top:25px;
+  right:-8px;
+  background-color:  grey;
+  border-radius: 50%;
+  color: white;
+}
+
+.playerMove .material-icons {
+  position: relative;
+  top:-8px;
+  right:-8px;
+  background-color: grey;
+  border-radius: 50%;
+  color: white;
+}
+
+.win .material-icons{
+  background-color: #81b970;
+}
+
+.lose .material-icons{
+  background-color:#aa3524
+}

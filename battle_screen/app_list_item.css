@@ -45,3 +45,19 @@ li.current:before {
   padding:10px;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.r_hook:before {
+  background-color: #3d6cb0;
+}
+.l_hook:before {
+  background-color: #d7803d;
+}
+.jab:before {
+  background-color: #81b970;
+}
+.uppercut:before {
+  background-color: #aa3524;
+}
+.cross:before {
+  background-color: #6a3a86;
+}
