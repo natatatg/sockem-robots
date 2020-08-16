@@ -89,10 +89,9 @@ let Engine = {
     //Try and get runRound to work with any RPS varient
     //use Options.possibleMoves[i]["winsAgainst"]
     setupGame(){
-        let opponentMoves = this.currentOpponent.moves;
-        opponentMoves = [];
+        let opponentMoves = this.currentOpponent.moves = [];
         for (let i = 0; i < Options.numberOfMoves; i++) {
-            let opponentMoves = this.currentOpponent.moves;
+            opponentMoves = this.currentOpponent.moves;
             opponentMoves.push(this.randomComputerMove())
         };
     },
@@ -180,6 +179,7 @@ let Engine = {
         this.setupGame();
         Player.score = 0;
         this.currentOpponent.score = 0;
+        this.round = 1;
     }
 }
 
