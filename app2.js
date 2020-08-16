@@ -1,5 +1,6 @@
 //game options - things set only once
 let Options = {
+    numberOfMoves : 4,
     possibleMoves: [
         {
             buttonLabel: "Jab", 
@@ -37,8 +38,8 @@ let Board = {
             let newButton = document.createElement("button");
             let playersMove = moves[i];
             newButton.addEventListener("click", () => {
-                Player.move = playersMove;
-                Engine.runRound();
+                Player.moves.push(playersMove);
+                console.log(Player.moves);
             });
             newButton.innerText = moves[i]["buttonLabel"];
 
@@ -50,13 +51,13 @@ let Board = {
 
 //player
 let Player = {
-    move : {},
+    moves : [],
     score: 0
 }
 
 //opponent
 function Opponent(){
-    this.move = {};
+    this.moves = [];
     this.score = 0;
 }
 
@@ -68,9 +69,21 @@ let Engine = {
     //REFRACTOR///
     //Try and get runRound to work with any RPS varient
     //use Options.possibleMoves[i]["winsAgainst"]
+    setupGame(){
+        for (let i = 0; i < Options.numberOfMoves; i++) {
+            let opponentMoves = this.currentOpponent.moves;
+            opponentMoves.push(this.randomComputerMove())
+        };
+        console.log(this.currentOpponent);
+    },
+    randomComputerMove(){
+        const randomNum = (Math.floor((Math.random()*5)));
+        let randomMove = Options.possibleMoves[randomNum];
+        return randomMove;
+    },
     runRound() {
-        let playerMove = Player.move;
-        let opponentMove = this.currentOpponent.move;
+        let playerMoves = Player.moves;
+        let opponentMoves = this.currentOpponent.moves;
         const randomNum = (Math.floor((Math.random()*5)));
         opponentMove = Options.possibleMoves[randomNum];
         console.log(playerMove.buttonLabel + " " + opponentMove.buttonLabel);
@@ -110,3 +123,4 @@ let Engine = {
 
 //initiate
 Board.createButtons();
+Engine.setupGame();
