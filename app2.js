@@ -33,19 +33,27 @@ let Options = {
 let Board = {
     createButtons () {
         let moves = Options.possibleMoves;
+        let buttonContainer = document.getElementById("buttonContainer");
+
 
         for (let i = 0; i < moves.length; i++) {
-            let newButton = document.createElement("button");
             let playersMove = moves[i];
+            let newButton = document.createElement("button");
+
             newButton.addEventListener("click", () => {
                 Player.moves.push(playersMove);
                 console.log(Player.moves);
             });
             newButton.innerText = moves[i]["buttonLabel"];
 
-            let buttonContainer = document.getElementById("buttonContainer");
             buttonContainer.appendChild(newButton);
         };
+        
+        let playButton = document.createElement("button");
+        playButton.innerText = "play";
+        playButton.addEventListener("click", () => Engine.runRound());
+        buttonContainer.appendChild(playButton); 
+
     }
 }
 
@@ -70,6 +78,8 @@ let Engine = {
     //Try and get runRound to work with any RPS varient
     //use Options.possibleMoves[i]["winsAgainst"]
     setupGame(){
+        let opponentMoves = this.currentOpponent.moves;
+        opponentMoves = [];
         for (let i = 0; i < Options.numberOfMoves; i++) {
             let opponentMoves = this.currentOpponent.moves;
             opponentMoves.push(this.randomComputerMove())
@@ -82,33 +92,54 @@ let Engine = {
         return randomMove;
     },
     runRound() {
-        let playerMoves = Player.moves;
+        
+        let playerMoves = Player.moves;  
         let opponentMoves = this.currentOpponent.moves;
-        const randomNum = (Math.floor((Math.random()*5)));
-        opponentMove = Options.possibleMoves[randomNum];
-        console.log(playerMove.buttonLabel + " " + opponentMove.buttonLabel);
-        this.round++;
-        if (playerMove.code === opponentMove.code) {
-            this.roundResult = "tie";
-        } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
-            this.roundResult = "win";
-            Player.score++;
-        } else {
-            this.roundResult = "lose";
-            this.currentOpponent.score++;
-        }
-        console.log(`Round: ${this.round}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
-
-        if (Player.score === 3 || this.currentOpponent.score === 3) {
-            console.log("GAME OVER.");
-            if (Player.score > this.currentOpponent.score) {
-                console.log("YOU WIN.");
+        for (let i  = 0; i < playerMoves.length; i++) {
+            const playerMove = playerMoves[i];
+            const playerCode = playerMove.code;
+            const opponentMove = opponentMoves[i];
+            const opponentCode = opponentMove.code;
+            
+            if (playerCode === opponentCode) {
+                    this.roundResult = "tie";
+            } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
+                this.roundResult = "win";
+                Player.score++;
             } else {
-                console.log("YOU LOSE.");
+                this.roundResult = "lose";
+                this.currentOpponent.score++;
             }
-            //function to reset round and scores
-            this.resetGame();
+            this.round++;
+            console.log(`Punch: ${this.round}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
+          
         }
+        this.resetGame();
+
+        // let playerMoves = Player.moves;
+        // console.log(playerMove.buttonLabel + " " + opponentMove.buttonLabel);
+        // this.round++;
+        // if (playerMove.code === opponentMove.code) {
+        //     this.roundResult = "tie";
+        // } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
+        //     this.roundResult = "win";
+        //     Player.score++;
+        // } else {
+        //     this.roundResult = "lose";
+        //     this.currentOpponent.score++;
+        // }
+        // console.log(`Round: ${this.round}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
+
+        // if (Player.score === 3 || this.currentOpponent.score === 3) {
+        //     console.log("GAME OVER.");
+        //     if (Player.score > this.currentOpponent.score) {
+        //         console.log("YOU WIN.");
+        //     } else {
+        //         console.log("YOU LOSE.");
+        //     }
+        //     //function to reset round and scores
+        //     this.resetGame();
+        // }
         
 
 
@@ -117,6 +148,7 @@ let Engine = {
         this.round = 0;
         Player.score = 0;
         this.currentOpponent.score = 0;
+        Player.moves = [];
 
     }
 }
