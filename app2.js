@@ -87,6 +87,7 @@ let Player = {
     moves : [],
     score : 0,
     moveCounter : 0,
+    roundScore : 0,
 }
 
 //opponent
@@ -115,7 +116,7 @@ let Engine = {
         return randomMove;
     },
     runRound () {
-        console.log(`Round: ${this.round}`)
+        console.log(`Round: ${this.round} of ${Options.numberOfRounds}`)
         let playerMoves = Player.moves;  
         let opponentMoves = this.currentOpponent.moves;
         for (let i  = 0; i < playerMoves.length; i++) {
@@ -129,12 +130,13 @@ let Engine = {
             } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
                 this.roundResult = "win";
                 Player.score++;
+                Player.roundScore++;
             } else {
                 this.roundResult = "lose";
                 this.currentOpponent.score++;
             }
             this.punch++;
-            console.log(`Punch: ${this.punch}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
+            console.log(`Punch: ${this.punch}. Player's ${playerMove.buttonLabel} VS Opponent's ${opponentMove.buttonLabel}, You ${this.roundResult}.`);
           
         }
         this.round++;
@@ -148,11 +150,20 @@ let Engine = {
         Board.disablePlayButton(true);
         Board.disablePunchButtons(false);
 
+        if (Player.roundScore == Options.numberOfMoves) {
+            console.log("KNOCK OUT");
+            console.log("YOU WIN.");
+            this.resetGame();
+        };
+
+        Player.roundScore = 0;
+
+
         if (this.round > Options.numberOfRounds) {
             console.log(`GAME OVER. FINAL SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
             
             
-            if (Player.score == this.currentOpponent.score) {
+            if (Player.roundScore == this.currentOpponent.score) {
                     console.log("IT'S A TIE")
             } else if (Player.score > this.currentOpponent.score) {
                 console.log("YOU WIN.");
