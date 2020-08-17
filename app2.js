@@ -32,6 +32,8 @@ let Options = {
 
 //game board - visual ux
 let Board = {
+    buttonArray : [],
+    playButton : document.createElement("button"),
     createButtons () {
         let moves = Options.possibleMoves;
         let buttonContainer = document.getElementById("buttonContainer");
@@ -49,21 +51,43 @@ let Board = {
             newButton.innerText = moves[i]["buttonLabel"];
 
             buttonContainer.appendChild(newButton);
+            
+            this.buttonArray.push(newButton);
         };
         
         let playButton = this.playButton;
         playButton.innerText = "play";
         playButton.addEventListener("click", () => Engine.runRound());
         buttonContainer.appendChild(playButton); 
-        playButton.disabled = true; 
-
+        
+        this.disablePlayButton();
     },
     checkCount () {
         if (Player.moveCounter >= Options.numberOfMoves){
-            this.playButton.disabled = false;
+            this.enablePlayButton();
+            this.disablePunchButtons();          
         }
     },
-    playButton : document.createElement("button"),
+    enablePlayButton(){
+        this.playButton.disabled = false;
+    },
+    disablePlayButton(){
+        this.playButton.disabled = true;
+    },
+    disablePunchButtons(){
+        let buttonArray = this.buttonArray;
+        for (let i = 0; i < buttonArray.length; i++) {
+            const button = buttonArray[i];
+            button.disabled = true;       
+        }
+    },
+    enablePunchButtons(){
+        let buttonArray = this.buttonArray;
+        for (let i = 0; i < buttonArray.length; i++) {
+            const button = buttonArray[i];
+            button.disabled = false;       
+        }
+    }
 }
 
 //player
@@ -151,14 +175,13 @@ let Engine = {
         //     this.resetGame();
         // }
         
-
-
         },
     resetRound() {
         this.punch = 0;
         Player.moves = [];
         Player.moveCounter = 0;
-        Board.playButton.disabled = true;
+        Board.disablePlayButton();
+        Board.enablePunchButtons();
 
         if (this.round > Options.numberOfRounds) {
             console.log(`GAME OVER. FINAL SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
