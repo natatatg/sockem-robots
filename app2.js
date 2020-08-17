@@ -2,7 +2,7 @@
 let Options = {
     numberOfMoves : 4,
     numberOfRounds : 3,
-    possibleMoves: [
+    possibleMoves : [
         {
             buttonLabel: "Jab", 
             code: "jab",
@@ -34,6 +34,7 @@ let Options = {
 let Board = {
     buttonArray : [],
     playButton : document.createElement("button"),
+    
     createButtons () {
         let moves = Options.possibleMoves;
         let buttonContainer = document.getElementById("buttonContainer");
@@ -60,32 +61,23 @@ let Board = {
         playButton.addEventListener("click", () => Engine.runRound());
         buttonContainer.appendChild(playButton); 
         
-        this.disablePlayButton();
+        this.disablePlayButton(true);
     },
     checkCount () {
         if (Player.moveCounter >= Options.numberOfMoves){
-            this.enablePlayButton();
-            this.disablePunchButtons();          
+            this.disablePlayButton(false);
+            this.disablePunchButtons(true);          
         }
     },
-    enablePlayButton(){
-        this.playButton.disabled = false;
+    disablePlayButton (boolean) {
+        this.playButton.disabled = boolean;
     },
-    disablePlayButton(){
-        this.playButton.disabled = true;
-    },
-    disablePunchButtons(){
+
+    disablePunchButtons (boolean) {
         let buttonArray = this.buttonArray;
         for (let i = 0; i < buttonArray.length; i++) {
             const button = buttonArray[i];
-            button.disabled = true;       
-        }
-    },
-    enablePunchButtons(){
-        let buttonArray = this.buttonArray;
-        for (let i = 0; i < buttonArray.length; i++) {
-            const button = buttonArray[i];
-            button.disabled = false;       
+            button.disabled = boolean;       
         }
     }
 }
@@ -93,38 +85,36 @@ let Board = {
 //player
 let Player = {
     moves : [],
-    score: 0,
-    moveCounter: 0,
+    score : 0,
+    moveCounter : 0,
 }
 
 //opponent
-function Opponent(){
+function Opponent () {
     this.moves = [];
     this.score = 0;
 }
 
 //game engine
 let Engine = {
-    currentOpponent: new Opponent(),
-    round: 1,
-    punch: 0,
-    roundResult: "",
-    //REFRACTOR///
-    //Try and get runRound to work with any RPS varient
-    //use Options.possibleMoves[i]["winsAgainst"]
-    setupGame(){
+    currentOpponent : new Opponent(),
+    round : 1,
+    punch : 0,
+    roundResult : "",
+  
+    setupGame () {
         let opponentMoves = this.currentOpponent.moves = [];
         for (let i = 0; i < Options.numberOfMoves; i++) {
             opponentMoves = this.currentOpponent.moves;
             opponentMoves.push(this.randomComputerMove())
         };
     },
-    randomComputerMove(){
+    randomComputerMove () {
         const randomNum = (Math.floor((Math.random()*5)));
         let randomMove = Options.possibleMoves[randomNum];
         return randomMove;
     },
-    runRound() {
+    runRound () {
         console.log(`Round: ${this.round}`)
         let playerMoves = Player.moves;  
         let opponentMoves = this.currentOpponent.moves;
@@ -149,39 +139,14 @@ let Engine = {
         }
         this.round++;
         this.resetRound();
-
-        // let playerMoves = Player.moves;
-        // console.log(playerMove.buttonLabel + " " + opponentMove.buttonLabel);
-        // this.round++;
-        // if (playerMove.code === opponentMove.code) {
-        //     this.roundResult = "tie";
-        // } else if (playerMove.winsAgainst.includes(opponentMove.code)) {
-        //     this.roundResult = "win";
-        //     Player.score++;
-        // } else {
-        //     this.roundResult = "lose";
-        //     this.currentOpponent.score++;
-        // }
-        // console.log(`Round: ${this.round}. Player chose ${playerMove.buttonLabel}, Opponent chose ${opponentMove.buttonLabel}, You ${this.roundResult}. SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
-
-        // if (Player.score === 3 || this.currentOpponent.score === 3) {
-        //     console.log("GAME OVER.");
-        //     if (Player.score > this.currentOpponent.score) {
-        //         console.log("YOU WIN.");
-        //     } else {
-        //         console.log("YOU LOSE.");
-        //     }
-        //     //function to reset round and scores
-        //     this.resetGame();
-        // }
         
         },
-    resetRound() {
+    resetRound () {
         this.punch = 0;
         Player.moves = [];
         Player.moveCounter = 0;
-        Board.disablePlayButton();
-        Board.enablePunchButtons();
+        Board.disablePlayButton(true);
+        Board.disablePunchButtons(false);
 
         if (this.round > Options.numberOfRounds) {
             console.log(`GAME OVER. FINAL SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
