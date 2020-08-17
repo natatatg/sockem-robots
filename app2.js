@@ -150,6 +150,8 @@ let Engine = {
         Board.disablePlayButton(true);
         Board.disablePunchButtons(false);
 
+
+        //REFACTOR create knock out as a method
         if (Player.roundScore == Options.numberOfMoves) {
             console.log("KNOCK OUT");
             console.log("YOU WIN.");
@@ -158,12 +160,12 @@ let Engine = {
 
         Player.roundScore = 0;
 
-
+        //REFACTOR create win screen as a methdd
         if (this.round > Options.numberOfRounds) {
             console.log(`GAME OVER. FINAL SCORE: YOU: ${Player.score} / OPPONENT: ${this.currentOpponent.score}`);
             
             
-            if (Player.roundScore == this.currentOpponent.score) {
+            if (Player.score == this.currentOpponent.score) {
                     console.log("IT'S A TIE")
             } else if (Player.score > this.currentOpponent.score) {
                 console.log("YOU WIN.");
