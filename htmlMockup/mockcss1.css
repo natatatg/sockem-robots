@@ -24,23 +24,24 @@ h2 {
     border-right: black solid 2px;
 }
 
-div.container1 {
+div.player_selections {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     padding: 10px 5px 5px 5px;
 }
 
-div.container2 {
+div.player_buttons {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     padding: 0px 5px 10px 5px;
 }
-div.bottom {
-    vertical-align: bottom;
+div#control_container {
     border: 2px solid black;
     width: 100%;
+    margin-right: auto;
+    margin-left: auto;
     position: absolute;
     bottom:0;
     background-color: white;
@@ -62,14 +63,7 @@ li {
     height: 40px;
     background-color: black;
 }
-.run-game {
-    border: solid black 1px;
-    border-radius: 50%;
-    background-color: #c4c4c4;
-    width: 40px;
-    height: 40px;
-    align-self: flex-start;
-}
+
 #rhook {
     background-color: #3d6cb0;
 }
@@ -84,4 +78,12 @@ li {
 }
 #cross {
     background-color: #6a3a86;
+}
+
+.deactive {
+
+}
+
+.active {
+    
 }
