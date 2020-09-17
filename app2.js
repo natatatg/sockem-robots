@@ -98,6 +98,7 @@ function Opponent () {
 
 //game engine
 let Engine = {
+ feature_multi_move
     currentOpponent : new Opponent(),
     round : 1,
     punch : 0,
@@ -111,6 +112,7 @@ let Engine = {
         };
     },
     randomComputerMove () {
+
         const randomNum = (Math.floor((Math.random()*5)));
         let randomMove = Options.possibleMoves[randomNum];
         return randomMove;

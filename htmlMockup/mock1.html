@@ -10,14 +10,14 @@
 </head>
 <body>
 
-<div class="bottom">
+<div id="control_container">
 
 <h2>Round 1</h2>
 
 
 
-<div class="container1">
-    <button class="selection"><span class="material-icons">
+<div class="player_selections">
+    <button class="selection active" id="backspace"><span class="material-icons">
         backspace
         </span></button>
     <ol>
@@ -26,12 +26,12 @@
         <li></li>
         <li></li>
     </ol>
-    <button class="run-game"><span class="material-icons md-36">
+    <button class="selection deactive" id="run_game"><span class="material-icons md-36">
         play_arrow
         </span></button>
 </div>
 
-<div class="container2">
+<div class="player_buttons">
     <button class="selection" id="rhook"></button>
     <button class="selection" id="lhook"></button>
     <button class="selection" id="jab"></button>
