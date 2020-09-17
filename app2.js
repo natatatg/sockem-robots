@@ -66,7 +66,7 @@ let Engine = {
     round: 0,
     roundResult: "",
     //REFRACTOR///
-    //Try and get runRound to work with any RPS varient
+    //Try and get runRound to work with any RPS variant
     //use Options.possibleMoves[i]["winsAgainst"]
     runRound() {
         let playerMove = Player.move;
